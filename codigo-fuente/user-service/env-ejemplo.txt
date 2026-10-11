@@ -1,0 +1,7 @@
+PORT=3000
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=marketplace
+DB_PASSWORD=1234
+DB_PORT=5432
+JWT_SECRET=cambia_esto_por_una_frase_larga_y_unica_123
