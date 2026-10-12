@@ -3,8 +3,8 @@ import apiFetch from "./api";
 import Login from "./components/Login";
 import AdminDashboard from "./components/AdminDashboard";
 import ProveedorDashboard from "./components/ProveedorDashboard";
-import ClienteDashboard from "./components/ClienteDashboard";
-
+import ClienteDashboard from "./components/clienteDashboard";
+import AdminReportes from "./components/AdminReportes"; // el dashboard de reportes
 function App() {
   // Al cargar la página, revisamos si ya había una sesión guardada en
   // localStorage (así, si le das F5, no te regresa al login).
@@ -61,7 +61,7 @@ function App() {
       {/* Aquí está la magia de "un dashboard distinto según el rol":
           solo UNO de estos 4 bloques se muestra, según usuario.rol */}
 
-      {usuario.rol === "admin" && <AdminDashboard />}
+      {usuario.rol === "admin" && <><AdminDashboard /><AdminReportes /></>}
 
       {usuario.rol === "proveedor" && <ProveedorDashboard />}
 

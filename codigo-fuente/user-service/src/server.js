@@ -52,6 +52,13 @@ const ordenController = crearOrdenController( // armamos controlador -> servicio
   })
 );
 
+const AnalyticsRepositoryAdapter = require("./infrastructure/analyticsRepositoryAdapter"); // adaptador SQL de reportes
+const { crearAnalyticsService } = require("./application/analyticsService"); // caso de uso de reportes
+const crearAnalyticsController = require("./interfaces/analyticsController"); // controlador HTTP de reportes
+const analyticsController = crearAnalyticsController( // conecta controlador -> servicio -> adaptador
+  crearAnalyticsService({ analyticsRepository: new AnalyticsRepositoryAdapter() })
+);
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -88,6 +95,12 @@ app.delete("/api/productos/:id", verificarToken, permitirRoles("proveedor", "adm
 // ---------- ÓRDENES (solo clientes) ----------
 app.post("/api/ordenes", verificarToken, permitirRoles("cliente"), ordenController.crearOrden); // checkout
 app.get("/api/ordenes/mias", verificarToken, permitirRoles("cliente"), ordenController.listarMisOrdenes); // historial
+app.get("/api/reportes/resumen", verificarToken, permitirRoles("admin"), analyticsController.resumen); // todo junto
+app.get("/api/reportes/productos", verificarToken, permitirRoles("admin"), analyticsController.ventasPorProducto); // top productos
+app.get("/api/reportes/ingresos", verificarToken, permitirRoles("admin"), analyticsController.ingresos); // ingresos por periodo
+app.get("/api/reportes/estados", verificarToken, permitirRoles("admin"), analyticsController.estadosPedidos); // pedidos por estado
+app.get("/api/reportes/ticket-promedio", verificarToken, permitirRoles("admin"), analyticsController.ticketPromedio); // ticket promedio
+
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Servidor Marketplace corriendo en el puerto ${process.env.PORT || 3000}`);
 });

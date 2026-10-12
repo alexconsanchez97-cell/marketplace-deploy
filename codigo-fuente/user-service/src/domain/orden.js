@@ -1,6 +1,6 @@
 // DOMINIO: Orden (pedido). Solo reglas del negocio, sin ningún require().
 
-const ESTADOS_VALIDOS = ["pendiente_pago", "pagada", "cancelada"]; // únicos estados permitidos
+const ESTADOS_VALIDOS = ["pendiente_pago", "pagada", "cancelada","enviada"]; // únicos estados permitidos
 
 class Orden { // "plantilla" para crear órdenes
   constructor(id, clienteId, items, estado = "pendiente_pago", creadoEn = null) { // estado y fecha tienen valor por defecto
